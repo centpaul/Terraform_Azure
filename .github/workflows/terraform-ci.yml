@@ -15,12 +15,8 @@ permissions:
 
 jobs:
   terraform:
-    name: Terraform Validation
+    name: Terraform Validation and Plan
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: .
 
     steps:
       - name: Checkout repository
@@ -37,3 +33,7 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
+
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan -input=false
