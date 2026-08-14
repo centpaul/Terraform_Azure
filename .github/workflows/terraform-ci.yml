@@ -18,6 +18,10 @@ jobs:
     name: Terraform Validation and Plan
     runs-on: ubuntu-latest
 
+    env:
+      TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_SSH_PUBLIC_KEY }}
+      TF_VAR_ssh_source_address: ${{ vars.TF_VAR_SSH_SOURCE_ADDRESS }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

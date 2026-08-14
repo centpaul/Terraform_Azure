@@ -28,15 +28,21 @@ variable "admin_username" {
   default     = "azureuser"
 }
 
-variable "ssh_public_key_path" {
-  description = "Path to the SSH public key"
+variable "ssh_public_key" {
+  description = "SSH public key used to access the VM"
   type        = string
+  sensitive   = true
 }
 
+
 variable "ssh_source_address" {
-  description = "IP/CIDR allowed to connect to the VM over SSH"
+  description = "Public IPv4 address or CIDR allowed to connect to the VM over SSH"
   type        = string
-  default     = "0.0.0.0/0"
+
+  validation {
+    condition     = var.ssh_source_address != "0.0.0.0/0"
+    error_message = "SSH access must not be open to the entire internet."
+  }
 }
 
 variable "environment" {
