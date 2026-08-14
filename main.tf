@@ -70,7 +70,7 @@ resource "azurerm_network_security_group" "vm_security_group" {
     name                       = "Allow-SSH"
     priority                   = 1001
     direction                  = "Inbound"
-    access                     = "Deny"
+    access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
@@ -124,7 +124,7 @@ resource "azurerm_linux_virtual_machine" "application_vm" {
 
   admin_ssh_key {
     username   = var.admin_username
-    public_key = file(pathexpand(var.ssh_public_key_path))
+    public_key = var.ssh_public_key
   }
 
   os_disk {
